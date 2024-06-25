@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Knownt
 {
@@ -7,7 +8,10 @@ namespace Knownt
         [Header("Player config")]
         public float moveSpeed = 2f;
         public float timerBetweenShoots = 10f;
+        [Space]
+        [Header("Objects")]
         public GameObject projectile;
+        public GameObject shootPoint;
         public GameObject mouseCross;
 
         private PlayerControls playerControls;
@@ -15,13 +19,13 @@ namespace Knownt
         private Vector2 movementInput;
         private Vector3 mouseWorldPos;
         private float shootCooldown;
-        private bool canShoot = true;
+        private bool isReloading = false;
 
         public void Awake()
         {
             playerControls = new PlayerControls();
 
-            playerControls.Player.Fire.performed += ctx => { Fire(); };
+            AddCallbacksInputs();
         }
 
         public void Update()
@@ -30,7 +34,17 @@ namespace Knownt
             mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f;
 
-            if ()
+            if (isReloading)
+            {
+                shootCooldown += Time.deltaTime;
+
+                if (shootCooldown >= timerBetweenShoots)
+                {
+                    isReloading = false;
+                    AddCallbacksInputs();
+                    Debug.Log("<color=#1FA0E6>Shoot cooldown finished.</color>");
+                }
+            }
 
             Move();
             Look();
@@ -58,12 +72,15 @@ namespace Knownt
             transform.rotation *= Quaternion.Euler(0, 0, -90); // Aim correction;
         }
 
-        private void Fire()
+        private void Fire(InputAction.CallbackContext context)
         {
-            Debug.Log("Firing");
+            Debug.Log("<color=#1FA0E6>Player shooted.</color>");
             GameObject newProjectile = Instantiate(projectile);
-            newProjectile.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            newProjectile.transform.SetPositionAndRotation(shootPoint.transform.position, transform.rotation);
             newProjectile.GetComponent<Projectile>().Initialize(mouseWorldPos);
+            RemoveCallbacksInputs();
+            isReloading = true;
+            shootCooldown = 0;
         }
 
         /*
@@ -75,6 +92,16 @@ namespace Knownt
                 yield return new WaitForSeconds(0.1f);
             }
         }*/
+
+        private void AddCallbacksInputs()
+        {
+            playerControls.Player.Fire.performed += Fire;
+        }
+
+        private void RemoveCallbacksInputs()
+        {
+            playerControls.Player.Fire.performed -= Fire;
+        }
 
         private void OnEnable()
         {
@@ -88,7 +115,7 @@ namespace Knownt
 
         private void OnDestroy()
         {
-            playerControls.Player.Fire.performed -= ctx => { Fire(); };
+            RemoveCallbacksInputs();
         }
     }
 }
