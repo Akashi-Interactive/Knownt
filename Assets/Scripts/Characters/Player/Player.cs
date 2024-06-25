@@ -8,61 +8,49 @@ namespace Knownt
         public float moveSpeed;
         public float aimSpeed;
         public GameObject projectile;
+        public GameObject mouseCross;
 
-        private bool m_Charging;
-        private Vector2 m_Rotation;
-        private PlayerControls m_Controls;
+        private PlayerControls playerControls;
+
+        private Vector2 movementInput;
+        private Vector3 mouseWorldPos;
 
         public void Awake()
         {
-            m_Controls = new PlayerControls();
+            playerControls = new PlayerControls();
 
-            m_Controls.Player.Fire.performed +=
-                ctx =>
-                {
-                    Fire();
-                };
-        }
-
-        private void OnEnable()
-        {
-            m_Controls.Enable();
-        }
-
-        private void OnDisable()
-        {
-            m_Controls.Disable();
+            playerControls.Player.Fire.performed += ctx => { Fire(); };
         }
 
         public void Update()
         {
-            var move = m_Controls.Player.Move.ReadValue<Vector2>();
-            var look = m_Controls.Player.Look.ReadValue<Vector2>();
-            
-            Look(look);
-            Move(move);
+            movementInput = playerControls.Player.Move.ReadValue<Vector2>();     
+            mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorldPos.z = 0f;
+
+            Move();
+            Look();
         }
 
-        private void Move(Vector2 direction)
+        private void Move()
         {
-            if (direction.sqrMagnitude < 0.01f)
+            if (movementInput.sqrMagnitude < 0.01f)
                 return;
 
             var scaledMoveSpeed = moveSpeed * Time.deltaTime;
 
-            var move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * (Vector3)direction;
-            Debug.Log(move);
+            var move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * (Vector3)movementInput;
+
             transform.position += move * scaledMoveSpeed;
         }
 
-        private void Look(Vector2 rotate)
+        private void Look()
         {
-            if (rotate.sqrMagnitude < 0.01)
-                return;
-            var scaledRotateSpeed = aimSpeed * Time.deltaTime;
-            m_Rotation.y += rotate.x * scaledRotateSpeed;
-            m_Rotation.x = Mathf.Clamp(m_Rotation.x - rotate.y * scaledRotateSpeed, -89, 89);
-            transform.localEulerAngles = m_Rotation;
+            mouseCross.transform.position = mouseWorldPos;
+
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 perpendicular = transform.position - mousePos;
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
         }
 
         private void Fire()
@@ -88,5 +76,20 @@ namespace Knownt
                 yield return new WaitForSeconds(0.1f);
             }
         }*/
+
+        private void OnEnable()
+        {
+            playerControls.Enable();
+        }
+
+        private void OnDisable()
+        {
+            playerControls.Disable();
+        }
+
+        private void OnDestroy()
+        {
+            playerControls.Player.Fire.performed -= ctx => { Fire(); };
+        }
     }
 }
