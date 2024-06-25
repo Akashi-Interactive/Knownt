@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Knownt
@@ -80,7 +82,7 @@ namespace Knownt
                 transform.position = point;
                 if (alerted)
                 {
-                    if (pathToFollow.Count < 0)
+                    if (pathToFollow.Count < 1)
                     {
                         alerted = false;
                     }
@@ -98,7 +100,7 @@ namespace Knownt
 
         private void FindShortestPathToPoint(GameObject endPoint, Pathpoint startingPoint)
         {
-            List<Pathpoint> unvisitedPathpoints = path;
+            List<Pathpoint> unvisitedPathpoints = path.ToList();
             Dictionary<Pathpoint, float> pathpointsMinDistance = new Dictionary<Pathpoint, float>();
             Dictionary<Pathpoint, List<Pathpoint>> shortestPathToPoints = new Dictionary<Pathpoint, List<Pathpoint>>();
 
@@ -115,7 +117,7 @@ namespace Knownt
             }
 
             pathpointsMinDistance[startingPoint] = 0;
-            shortestPathToPoints[startingPoint].Add(startingPoint);
+            shortestPathToPoints[startingPoint] = new List<Pathpoint> { startingPoint };
 
             while (unvisitedPathpoints.Count > 0)
             {
@@ -130,6 +132,8 @@ namespace Knownt
                     }
                 }
 
+                unvisitedPathpoints.Remove(currentPoint);
+
                 for (int i = 0; i < currentPoint.adjacentPoints.Count; i++)
                 {
                     Pathpoint point = currentPoint.adjacentPoints[i];
@@ -139,7 +143,7 @@ namespace Knownt
                         if (pathpointsMinDistance[point] > distanceFromPoint)
                         {
                             pathpointsMinDistance[point] = distanceFromPoint;
-                            shortestPathToPoints[point] = shortestPathToPoints[currentPoint];
+                            shortestPathToPoints[point] = shortestPathToPoints[currentPoint].ToList();
                             shortestPathToPoints[point].Add(point);
                         }
                     }
@@ -152,12 +156,9 @@ namespace Knownt
                     if (minDistanceToEndPoint > hit.distance + pathpointsMinDistance[currentPoint])
                     {
                         minDistanceToEndPoint = hit.distance + pathpointsMinDistance[currentPoint];
-                        shortestPathToEndPoint = shortestPathToPoints[currentPoint];
+                        shortestPathToEndPoint = shortestPathToPoints[currentPoint].ToList();
                     }
                 }
-
-                unvisitedPathpoints.Remove(currentPoint);
-
             }
 
             pathToFollow = new Queue<Pathpoint>(shortestPathToEndPoint);
