@@ -5,8 +5,8 @@ namespace Knownt
     public class Player : MonoBehaviour
     {
         [Header("Player config")]
-        public float moveSpeed;
-        public float aimSpeed;
+        public float moveSpeed = 2f;
+        public float timerBetweenShoots = 10f;
         public GameObject projectile;
         public GameObject mouseCross;
 
@@ -14,6 +14,8 @@ namespace Knownt
 
         private Vector2 movementInput;
         private Vector3 mouseWorldPos;
+        private float shootCooldown;
+        private bool canShoot = true;
 
         public void Awake()
         {
@@ -27,6 +29,8 @@ namespace Knownt
             movementInput = playerControls.Player.Move.ReadValue<Vector2>();     
             mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f;
+
+            if ()
 
             Move();
             Look();
@@ -51,20 +55,15 @@ namespace Knownt
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 perpendicular = transform.position - mousePos;
             transform.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
+            transform.rotation *= Quaternion.Euler(0, 0, -90); // Aim correction;
         }
 
         private void Fire()
-        {/*
-            var transform = this.transform;
-            var newProjectile = Instantiate(projectile);
-            newProjectile.transform.position = transform.position + transform.forward * 0.6f;
-            newProjectile.transform.rotation = transform.rotation;
-            const int size = 1;
-            newProjectile.transform.localScale *= size;
-            newProjectile.GetComponent<Rigidbody>().mass = Mathf.Pow(size, 3);
-            newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * 20f, ForceMode.Impulse);
-            newProjectile.GetComponent<MeshRenderer>().material.color =
-                new Color(Random.value, Random.value, Random.value, 1.0f);*/
+        {
+            Debug.Log("Firing");
+            GameObject newProjectile = Instantiate(projectile);
+            newProjectile.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            newProjectile.GetComponent<Projectile>().Initialize(mouseWorldPos);
         }
 
         /*
