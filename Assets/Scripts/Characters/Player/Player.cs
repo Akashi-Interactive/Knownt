@@ -17,7 +17,9 @@ namespace Knownt
         private PlayerControls playerControls;
 
         private Vector2 movementInput;
+        private Vector2 crossInput;
         private Vector3 mouseWorldPos;
+        private float crossSpeed = 1f;
         private float shootCooldown;
         private bool isReloading = false;
 
@@ -30,7 +32,8 @@ namespace Knownt
 
         public void Update()
         {
-            movementInput = playerControls.Player.Move.ReadValue<Vector2>();     
+            movementInput = playerControls.Player.Move.ReadValue<Vector2>();
+            crossInput = playerControls.Player.Look.ReadValue<Vector2>();
             mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f;
 
@@ -55,21 +58,29 @@ namespace Knownt
             if (movementInput.sqrMagnitude < 0.01f)
                 return;
 
-            var scaledMoveSpeed = moveSpeed * Time.deltaTime;
+            float scaledMoveSpeed = moveSpeed * Time.deltaTime;
 
-            var move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * (Vector3)movementInput;
+            Vector3 move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * (Vector3)movementInput;
 
             transform.position += move * scaledMoveSpeed;
         }
 
         private void Look()
         {
-            mouseCross.transform.position = mouseWorldPos;
+            if(crossInput.sqrMagnitude > 0.1f)
+            {
+                float scaledMoveSpeed = crossSpeed * Time.deltaTime;
 
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 perpendicular = transform.position - mousePos;
-            transform.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
-            transform.rotation *= Quaternion.Euler(0, 0, -90); // Aim correction;
+                Vector3 move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * (Vector3)crossInput;
+
+                mouseCross.transform.position += move * scaledMoveSpeed;
+            } else {
+                mouseCross.transform.position = mouseWorldPos;
+
+                Vector3 perpendicular = transform.position - mouseCross.transform.position;
+                transform.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
+                transform.rotation *= Quaternion.Euler(0, 0, -90); // Aim correction;
+            }
         }
 
         private void Fire(InputAction.CallbackContext context)
