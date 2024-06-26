@@ -61,14 +61,6 @@ namespace Knownt
                 direction.Normalize();
                 var step = speed * Time.deltaTime; 
                 transform.position += direction * step;
-
-                //// Check if the position of the cube and sphere are approximately equal.
-                //if (Vector3.Distance(transform.position, destination) < 0.001f)
-                //{
-                //    // Swap the position of the cylinder.
-                //    target.position *= -1.0f;
-                //}
-                Debug.Log("coru");
                 yield return null;
             }
             moving = false;
