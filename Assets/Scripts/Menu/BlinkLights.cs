@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class BlinkLights : MonoBehaviour
 {
     public List<Light2D> lightsToBlink; // Lista de luces a parpadear
-    public float blinkDuration = 100.0f; // Duración total del parpadeo
+    public float blinkDuration = Mathf.Infinity; // Duración total del parpadeo
     public float blinkInterval = 0.2f; // Intervalo entre parpadeos
     public float minIntensity = 30.0f; // Intensidad mínima
     public float maxIntensity = 80.0f; // Intensidad máxima
