@@ -77,7 +77,8 @@ namespace Knownt
             } else {
                 mouseCross.transform.position = mouseWorldPos;
 
-                Vector3 perpendicular = transform.position - mouseCross.transform.position;
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 perpendicular = transform.position - mousePos;
                 transform.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
                 transform.rotation *= Quaternion.Euler(0, 0, -90); // Aim correction;
             }
