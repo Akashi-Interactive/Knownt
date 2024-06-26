@@ -6,16 +6,17 @@ namespace Knownt
     public class Player : MonoBehaviour
     {
         [Header("Player config")]
-        public float moveSpeed = 2f;
-        public float timerBetweenShoots = 10f;
+        [SerializeField] private float moveSpeed = 2f;
+        [SerializeField] private float timerBetweenShoots = 10f;
         [Space]
         [Header("Objects")]
-        public GameObject projectile;
-        public GameObject shootPoint;
-        public GameObject mouseCross;
+        [SerializeField] private GameObject projectile;
+        [SerializeField] private GameObject shootPoint;
+        [SerializeField] private GameObject mouseCross;
 
         private PlayerControls playerControls;
 
+        private Rigidbody2D rb;
         private Vector2 movementInput;
         private Vector2 crossInput;
         private Vector3 mouseWorldPos;
@@ -26,6 +27,7 @@ namespace Knownt
         public void Awake()
         {
             playerControls = new PlayerControls();
+            rb = GetComponent<Rigidbody2D>();
 
             AddCallbacksInputs();
         }
@@ -49,20 +51,22 @@ namespace Knownt
                 }
             }
 
-            Move();
             Look();
+            Move();
         }
 
         private void Move()
-        {
+        {/*
             if (movementInput.sqrMagnitude < 0.01f)
                 return;
-
+            
             float scaledMoveSpeed = moveSpeed * Time.deltaTime;
 
             Vector3 move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * (Vector3)movementInput;
 
-            transform.position += move * scaledMoveSpeed;
+            transform.position += move * scaledMoveSpeed;*/
+
+            rb.velocity = (movementInput * moveSpeed);
         }
 
         private void Look()

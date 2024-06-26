@@ -41,6 +41,7 @@ namespace Knownt
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+            Debug.Log("Collision" + collision.gameObject.name);
             OnDestroy();
         }
 
