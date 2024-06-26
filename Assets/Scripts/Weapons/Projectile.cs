@@ -7,8 +7,12 @@ namespace Knownt
         [Header("Projectile Config")]
         public float moveSpeed = 2.5f;
         public float lifeTime = 5f;
+        [Space]
+        [Header("Mini Ghost")]
+        public GameObject miniGhost;
 
         private Vector3 destination;
+        private bool isInstancing = false;
 
         private void Update()
         {
@@ -42,6 +46,15 @@ namespace Knownt
 
         private void OnDestroy()
         {
+            if (isInstancing)
+                return;
+
+            isInstancing = true;
+            GameObject instance = Instantiate(miniGhost);
+            instance.gameObject.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            instance.GetComponent<SpriteRenderer>().color =
+                new Color(Random.value, Random.value, Random.value, 1.0f);
+            instance.GetComponent<MiniGhost>().AlertEnemies();
             Destroy(gameObject);
         }
     }
