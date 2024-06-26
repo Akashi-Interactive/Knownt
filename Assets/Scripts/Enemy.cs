@@ -123,6 +123,8 @@ namespace Knownt
 
             float lowestDistancePoint;
 
+            Physics2D.SyncTransforms();
+
             for (int i = 0; i < unvisitedPathpoints.Count; i++)
             {
                 pathpointsMinDistance[unvisitedPathpoints[i]] = Mathf.Infinity;
@@ -157,7 +159,6 @@ namespace Knownt
                             pathpointsMinDistance[point] = distanceFromPoint;
                             shortestPathToPoints[point] = shortestPathToPoints[currentPoint].ToList();
                             shortestPathToPoints[point].Add(point);
-                            Debug.Log(point + ", " + currentPoint);
                         }
                     }
                 }
@@ -170,11 +171,8 @@ namespace Knownt
                     {
                         minDistanceToEndPoint = hit.distance + pathpointsMinDistance[currentPoint];
                         shortestPathToEndPoint = shortestPathToPoints[currentPoint].ToList();
-                        Debug.Log(minDistanceToEndPoint);
                     }
                 }
-                Debug.Log(hit.transform);
-                Debug.DrawRay(currentPoint.transform.position, (endPoint.transform.position - currentPoint.transform.position).normalized * hit.distance, UnityEngine.Color.red, 100);
             }
 
             pathToFollow = new Queue<Pathpoint>(shortestPathToEndPoint);

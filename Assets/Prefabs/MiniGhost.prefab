@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4151223361386558143}
   - component: {fileID: 8509682833104379360}
   - component: {fileID: 861723724142609570}
-  - component: {fileID: 7897698835871486321}
+  - component: {fileID: 933737708599266854}
   m_Layer: 0
   m_Name: MiniGhost
   m_TagString: Untagged
@@ -98,10 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5c072957392904990a6ea5737ff3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circleCollider2D: {fileID: 7897698835871486321}
   halfExtents: 5
---- !u!58 &7897698835871486321
-CircleCollider2D:
+--- !u!61 &933737708599266854
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -133,5 +132,15 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.25, y: 0.25, z: 0.25, w: 0.25}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 0.5336453, y: 0.50773674}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 2
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.26
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

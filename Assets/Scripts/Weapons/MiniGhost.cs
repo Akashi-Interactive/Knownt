@@ -4,7 +4,6 @@ namespace Knownt
 {
     public class MiniGhost : MonoBehaviour
     {
-        public CircleCollider2D circleCollider2D;
         public float halfExtents;
 
         public void AlertEnemies()
