@@ -26,8 +26,8 @@ namespace Knownt
         /// <summary> Initialize required componets. </summary>
         private void Initialize()
         {
-            UpdateMusicVolume(0.7f);
-            UpdateEffectVolume(0.7f);
+            UpdateMusicVolume(SaveManager.SavedData.AudioData.Music_Volume);
+            UpdateEffectVolume(SaveManager.SavedData.AudioData.Effect_Volume);
         }
         #endregion
 
