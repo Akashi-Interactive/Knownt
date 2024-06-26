@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,25 +12,35 @@ namespace Knownt
     {
         [SerializeField]
         private List<Pathpoint> path;
+        [SerializeField]
+        private int playerLayer;
 
         private Pathpoint nextPathpoint;
-        private bool alerted;
+        private bool alerted = false;
+        private bool playerInSight = false;
         private Vector3 alertPosition;
         private Queue<Pathpoint> pathToFollow;
+        private GameObject player;
 
         [SerializeField]
         private float speed;
+        [SerializeField]
+        private float fieldOfVisionWidth;
+        [SerializeField]
+        private float fieldOfVisionLength;
 
         // Start is called before the first frame update
         void Start()
         {
             FillPathpointsData();
             nextPathpoint = path[0];
+            player = GameObject.FindGameObjectWithTag("Player");
         }
 
         // Update is called once per frame
         void Update()
         {
+            SearchPlayer();    
             if (alerted)
             {
                 if (pathToFollow.Count > 0)
@@ -41,9 +52,13 @@ namespace Knownt
                     MoveToNextPoint(alertPosition);
                 }
             }
-            else
+            else if (!playerInSight)
             {
                 MoveToNextPoint(nextPathpoint.transform.position);
+            }
+            else
+            {
+                MoveToNextPoint(player.transform.position);
             }
         }
 
@@ -80,37 +95,50 @@ namespace Knownt
             else
             {
                 transform.position = point;
-                if (alerted)
+                if (playerInSight)
                 {
-                    if (pathToFollow.Count < 1)
+                    playerInSight = false;
+                    FindNewPoint();
+                }
+                else
+                {
+                    if (alerted)
                     {
-                        nextPathpoint = null;
-                        alerted = false;
-                        int i = 0;
-                        while(nextPathpoint == null)
+                        if (pathToFollow.Count < 1)
                         {
-                            RaycastHit2D hit;
-                            hit = Physics2D.Raycast(transform.position, path[i].transform.position - transform.position);
-                            if (hit.transform.gameObject == path[i].gameObject)
-                            {
-                                nextPathpoint = path[i];
-                            }
-                            i++;
+                            alerted = false;
+                            FindNewPoint();
+                        }
+                        else
+                        {
+                            pathToFollow.Dequeue();
                         }
                     }
                     else
                     {
-                        pathToFollow.Dequeue();
+                        nextPathpoint = nextPathpoint.adjacentPoints[UnityEngine.Random.Range(0, nextPathpoint.adjacentPoints.Count)];
                     }
-                }
-                else
-                {
-                    nextPathpoint = nextPathpoint.adjacentPoints[Random.Range(0, nextPathpoint.adjacentPoints.Count)];
                 }
             }
         }
 
-        private void FindShortestPathToPoint(GameObject endPoint, Pathpoint startingPoint)
+        private void FindNewPoint()
+        {
+            nextPathpoint = null;
+            int i = 0;
+            while (nextPathpoint == null)
+            {
+                RaycastHit2D hit;
+                hit = Physics2D.Raycast(transform.position, path[i].transform.position - transform.position);
+                if (hit.transform.gameObject == path[i].gameObject)
+                {
+                    nextPathpoint = path[i];
+                }
+                i++;
+            }
+        }
+
+        private void FindShortestPathToPoint(GameObject endPoint)
         {
             List<Pathpoint> unvisitedPathpoints = path.ToList();
             Dictionary<Pathpoint, float> pathpointsMinDistance = new Dictionary<Pathpoint, float>();
@@ -125,17 +153,31 @@ namespace Knownt
 
             Physics2D.SyncTransforms();
 
-            for (int i = 0; i < unvisitedPathpoints.Count; i++)
+            RaycastHit2D hitEnd;
+            hitEnd = Physics2D.Raycast(transform.position, endPoint.transform.position - transform.position);
+
+            if (hitEnd.transform.gameObject == endPoint)
             {
-                pathpointsMinDistance[unvisitedPathpoints[i]] = Mathf.Infinity;
+                unvisitedPathpoints.Clear();
             }
 
-            pathpointsMinDistance[startingPoint] = 0;
-            shortestPathToPoints[startingPoint] = new List<Pathpoint> { startingPoint };
+            for (int i = 0; i < unvisitedPathpoints.Count; i++)
+            {
+                RaycastHit2D hit;
+                hit = Physics2D.Raycast(transform.position, unvisitedPathpoints[i].transform.position - transform.position);
+                if (hit.transform.gameObject == unvisitedPathpoints[i].gameObject)
+                {
+                    pathpointsMinDistance.Add(unvisitedPathpoints[i], hit.distance);
+                    shortestPathToPoints.Add(unvisitedPathpoints[i], new List<Pathpoint>() { unvisitedPathpoints[i] });
+                }
+                else
+                {
+                    pathpointsMinDistance.Add(unvisitedPathpoints[i], Mathf.Infinity);
+                }
+            }
 
             while (unvisitedPathpoints.Count > 0)
             {
-
                 lowestDistancePoint = Mathf.Infinity;
                 currentPoint = null;
                 for (int i = 0; i < unvisitedPathpoints.Count; ++i)
@@ -178,11 +220,28 @@ namespace Knownt
             pathToFollow = new Queue<Pathpoint>(shortestPathToEndPoint);
         }
 
+        private void SearchPlayer()
+        {
+            Debug.Log(transform.up);
+            float angleDiferenceFromPlayer;
+            angleDiferenceFromPlayer = Vector3.Angle(transform.up, player.transform.position - transform.position);
+            Debug.DrawRay(transform.position, transform.up * 5, UnityEngine.Color.red, 100);
+            if (Mathf.Abs(angleDiferenceFromPlayer) < fieldOfVisionWidth)
+            {
+                RaycastHit2D hit;
+                hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, fieldOfVisionLength);
+                if (hit.transform.gameObject == player)
+                {
+                    playerInSight = true;
+                }
+            }
+        }
+
         public void OnAlerted(GameObject alertEmiter)
         {
             alertPosition = alertEmiter.transform.position;
             alerted = true;
-            FindShortestPathToPoint(alertEmiter, nextPathpoint);
+            FindShortestPathToPoint(alertEmiter);
         }
     } 
 }
