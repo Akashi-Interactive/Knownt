@@ -84,7 +84,19 @@ namespace Knownt
                 {
                     if (pathToFollow.Count < 1)
                     {
+                        nextPathpoint = null;
                         alerted = false;
+                        int i = 0;
+                        while(nextPathpoint == null)
+                        {
+                            RaycastHit2D hit;
+                            hit = Physics2D.Raycast(transform.position, path[i].transform.position - transform.position);
+                            if (hit.transform.gameObject == path[i].gameObject)
+                            {
+                                nextPathpoint = path[i];
+                            }
+                            i++;
+                        }
                     }
                     else
                     {
