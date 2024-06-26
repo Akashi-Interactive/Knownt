@@ -157,20 +157,24 @@ namespace Knownt
                             pathpointsMinDistance[point] = distanceFromPoint;
                             shortestPathToPoints[point] = shortestPathToPoints[currentPoint].ToList();
                             shortestPathToPoints[point].Add(point);
+                            Debug.Log(point + ", " + currentPoint);
                         }
                     }
                 }
                 RaycastHit2D hit;
                 hit = Physics2D.Raycast(currentPoint.transform.position, endPoint.transform.position - currentPoint.transform.position);
 
-                if (hit.transform.gameObject == endPoint)
+                if (hit.collider != null && hit.transform.gameObject == endPoint)
                 {
                     if (minDistanceToEndPoint > hit.distance + pathpointsMinDistance[currentPoint])
                     {
                         minDistanceToEndPoint = hit.distance + pathpointsMinDistance[currentPoint];
                         shortestPathToEndPoint = shortestPathToPoints[currentPoint].ToList();
+                        Debug.Log(minDistanceToEndPoint);
                     }
                 }
+                Debug.Log(hit.transform);
+                Debug.DrawRay(currentPoint.transform.position, (endPoint.transform.position - currentPoint.transform.position).normalized * hit.distance, UnityEngine.Color.red, 100);
             }
 
             pathToFollow = new Queue<Pathpoint>(shortestPathToEndPoint);

@@ -5,11 +5,11 @@ namespace Knownt
     public class MiniGhost : MonoBehaviour
     {
         public CircleCollider2D circleCollider2D;
+        public float halfExtents;
 
         public void AlertEnemies()
         {
-            Vector3 center = circleCollider2D.bounds.center;
-            float halfExtents = circleCollider2D.radius;
+            Vector3 center = gameObject.transform.position;
 
             Collider2D[] colliders = Physics2D.OverlapCircleAll(center, halfExtents);
 
