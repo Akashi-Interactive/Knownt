@@ -273,5 +273,13 @@ namespace Knownt
             alerted = true;
             FindShortestPathToPoint(alertEmiter);
         }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.GetComponent<Player>())
+            {
+
+            }
+        }
     } 
 }
