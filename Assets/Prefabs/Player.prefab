@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  timerBetweenShoots: 10
+  timerBetweenShoots: 3
   projectile: {fileID: 156943897347775588, guid: 76b6ec9301fc2c442a17dfa819ecf2a3, type: 3}
   shootPoint: {fileID: 2038780688308219463}
   mouseCross: {fileID: 0}

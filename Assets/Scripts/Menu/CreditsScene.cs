@@ -11,19 +11,19 @@ public class CreditsScene : MonoBehaviour
 
     void Start()
     {
-        Invoke("activatePantalla2", 8f);
+        Invoke("activatePantalla2", 4f);
     }
 
     public void activatePantalla2()
     {
-        Invoke("startFadeIn", 8f);
+        Invoke("startFadeIn", 4f);
         pantalla1.SetActive(false);
         Invoke("LoadMainMenu", 1f);
     }
 
     public void LoadMainMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MenuTesting");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
     public void startFadeIn()

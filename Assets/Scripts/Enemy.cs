@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Knownt
@@ -35,6 +30,11 @@ namespace Knownt
         private float fieldOfVisionWidth;
         [SerializeField]
         private float fieldOfVisionLength;
+
+        private void Awake()
+        {
+            pointsSetuped = false;
+        }
 
         // Start is called before the first frame update
         void Start()
