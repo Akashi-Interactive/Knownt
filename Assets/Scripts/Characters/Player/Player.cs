@@ -46,7 +46,6 @@ namespace Knownt
                 if (shootCooldown >= timerBetweenShoots)
                 {
                     isReloading = false;
-                    AddCallbacksInputs();
                     Debug.Log("<color=#1FA0E6>Shoot cooldown finished.</color>");
                 }
             }
@@ -71,6 +70,9 @@ namespace Knownt
 
         private void Look()
         {
+            if(Time.timeScale == 0)
+                return;
+
             if(crossInput.sqrMagnitude > 0.1f)
             {
                 float scaledMoveSpeed = crossSpeed * Time.deltaTime;
@@ -90,13 +92,22 @@ namespace Knownt
 
         private void Fire(InputAction.CallbackContext context)
         {
+            if (isReloading)
+                return;
+
             Debug.Log("<color=#1FA0E6>Player shooted.</color>");
             GameObject newProjectile = Instantiate(projectile);
             newProjectile.transform.SetPositionAndRotation(shootPoint.transform.position, transform.rotation);
             newProjectile.GetComponent<Projectile>().Initialize(mouseWorldPos);
-            RemoveCallbacksInputs();
             isReloading = true;
             shootCooldown = 0;
+        }
+
+        private void Pause(InputAction.CallbackContext context)
+        {
+            Debug.Log("<color=#1FA0E6>Pause.</color>");
+            PauseController.Pause();
+            CanvasController.Instance.ShowPauseUI();
         }
 
         /*
@@ -112,11 +123,13 @@ namespace Knownt
         private void AddCallbacksInputs()
         {
             playerControls.Player.Fire.performed += Fire;
+            playerControls.Player.Pause.performed += Pause;
         }
 
         private void RemoveCallbacksInputs()
         {
             playerControls.Player.Fire.performed -= Fire;
+            playerControls.Player.Pause.performed -= Pause;
         }
 
         private void OnEnable()

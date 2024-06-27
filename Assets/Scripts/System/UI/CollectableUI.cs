@@ -8,9 +8,9 @@ namespace Knownt
         public static CollectableUI instance;
 
         public TextMeshProUGUI collectableText;
-        [SerializeField] private int maxCollectableCount;
+        [field: SerializeField] public int maxCollectableCount { get; private set; }
 
-        private int currentCollectableCount;
+        public int currentCollectableCount { get; private set; }
 
         private void Awake()
         {
