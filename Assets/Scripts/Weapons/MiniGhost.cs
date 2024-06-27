@@ -5,6 +5,7 @@ namespace Knownt
     public class MiniGhost : MonoBehaviour
     {
         public float halfExtents;
+        public float lifeTime;
 
         public void AlertEnemies()
         {
@@ -21,6 +22,13 @@ namespace Knownt
                 }
             }
 
+            Invoke(nameof(OnDestroy), lifeTime);
+
+        }
+
+        private void OnDestroy()
+        {
+            Destroy(gameObject);
         }
     }
 }

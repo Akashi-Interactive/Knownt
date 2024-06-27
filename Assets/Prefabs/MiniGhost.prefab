@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   halfExtents: 6
+  lifeTime: 5
 --- !u!61 &933737708599266854
 BoxCollider2D:
   m_ObjectHideFlags: 0

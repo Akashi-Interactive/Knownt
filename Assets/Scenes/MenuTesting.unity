@@ -702,6 +702,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collect Image
       objectReference: {fileID: 0}
+    - target: {fileID: 1646873625504262945, guid: 98962737bd8a18947af50a65ac55f0d4, type: 3}
+      propertyPath: collectableTransform
+      value: 
+      objectReference: {fileID: 410978423}
     - target: {fileID: 2435859010669179197, guid: 98962737bd8a18947af50a65ac55f0d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.6606734
@@ -762,6 +766,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae94ec410e9e8fb42b7da38f6449b353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &410978423 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 447033214638649491, guid: 98962737bd8a18947af50a65ac55f0d4, type: 3}
+  m_PrefabInstance: {fileID: 410978421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &533326476
 PrefabInstance:
   m_ObjectHideFlags: 0

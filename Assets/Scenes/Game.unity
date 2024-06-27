@@ -44042,6 +44042,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collect Image
       objectReference: {fileID: 0}
+    - target: {fileID: 1646873625504262945, guid: 98962737bd8a18947af50a65ac55f0d4, type: 3}
+      propertyPath: collectableTransform
+      value: 
+      objectReference: {fileID: 602651242}
     - target: {fileID: 2435859010669179197, guid: 98962737bd8a18947af50a65ac55f0d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.6606734
@@ -44144,6 +44148,10 @@ PrefabInstance:
       propertyPath: mouseCross
       value: 
       objectReference: {fileID: 835224392}
+    - target: {fileID: 1075324563852344175, guid: e2cb2bf939a73034c8fc6b8128bea714, type: 3}
+      propertyPath: playerSprite
+      value: 
+      objectReference: {fileID: 661828858}
     - target: {fileID: 1422649354186439423, guid: e2cb2bf939a73034c8fc6b8128bea714, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -44220,6 +44228,11 @@ PrefabInstance:
 --- !u!4 &661828857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1422649354186439423, guid: e2cb2bf939a73034c8fc6b8128bea714, type: 3}
+  m_PrefabInstance: {fileID: 661828856}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &661828858 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7499414392158296002, guid: e2cb2bf939a73034c8fc6b8128bea714, type: 3}
   m_PrefabInstance: {fileID: 661828856}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &715106654

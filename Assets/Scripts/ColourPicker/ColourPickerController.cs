@@ -1,3 +1,4 @@
+using Knownt;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -86,6 +87,8 @@ public class ColourPickerController : MonoBehaviour
     private void UpdateOutputImage()
     {
         Color colour = Color.HSVToRGB(hue, saturation, value);
+
+        SystemManager.playerColor = colour;
 
         for (int i = 0; i < outputTexture.height; i++)
         {

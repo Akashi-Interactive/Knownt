@@ -13,6 +13,7 @@ namespace Knownt
         [SerializeField] private GameObject projectile;
         [SerializeField] private GameObject shootPoint;
         [SerializeField] private GameObject mouseCross;
+        [SerializeField] private SpriteRenderer playerSprite;
 
         private PlayerControls playerControls;
 
@@ -30,6 +31,11 @@ namespace Knownt
             rb = GetComponent<Rigidbody2D>();
 
             AddCallbacksInputs();
+        }
+
+        private void Start()
+        {
+            playerSprite.color = SystemManager.playerColor;
         }
 
         public void Update()

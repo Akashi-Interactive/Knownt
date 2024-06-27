@@ -6,6 +6,8 @@ namespace Knownt
     {
         public static SystemManager Instance;
 
+        public static Color playerColor;
+
         private void Awake()
         {
             if (Instance == null)
