@@ -80,7 +80,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4929300237029520300
 Transform:
   m_ObjectHideFlags: 0
@@ -201,6 +201,7 @@ MonoBehaviour:
   projectile: {fileID: 156943897347775588, guid: 76b6ec9301fc2c442a17dfa819ecf2a3, type: 3}
   shootPoint: {fileID: 2038780688308219463}
   mouseCross: {fileID: 0}
+  playerSprite: {fileID: 0}
 --- !u!58 &5919254418188646783
 CircleCollider2D:
   m_ObjectHideFlags: 0
