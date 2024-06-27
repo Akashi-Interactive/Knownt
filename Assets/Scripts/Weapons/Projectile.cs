@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Knownt
 {
@@ -53,9 +54,11 @@ namespace Knownt
             isInstancing = true;
             GameObject instance = Instantiate(miniGhost);
             instance.gameObject.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            instance.GetComponent<SpriteRenderer>().color =
-                new Color(Random.value, Random.value, Random.value, 1.0f);
+            Color color = new Color(Random.value, Random.value, Random.value, 1.0f);
+            instance.GetComponent<SpriteRenderer>().color = color;
             instance.GetComponent<MiniGhost>().AlertEnemies();
+            Light2D light = instance.GetComponentInChildren<Light2D>();
+            light.color = color;
             Destroy(gameObject);
         }
     }
