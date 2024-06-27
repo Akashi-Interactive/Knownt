@@ -17,5 +17,10 @@ namespace Knownt
         {
             SceneManager.LoadScene("Game");
         }
+
+        public void LoadCredits()
+        {
+            SceneManager.LoadScene("Creditos");
+        }
     }
 }
