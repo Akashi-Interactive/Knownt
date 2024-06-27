@@ -24,6 +24,13 @@ namespace Knownt
         {
             currentCollectableCount++;
             collectableText.text = currentCollectableCount.ToString() + "/" + maxCollectableCount.ToString();
+
+            if (currentCollectableCount >= maxCollectableCount)
+            {
+                Debug.Log("<color=#1FA0E6>Player wins!</color>");
+                CanvasController.Instance.ShowWinUI();
+                PauseController.Pause();
+            }
         }
     }
 }
