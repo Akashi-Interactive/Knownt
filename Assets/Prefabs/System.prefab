@@ -88,8 +88,9 @@ GameObject:
   - component: {fileID: 447033214638649491}
   - component: {fileID: 927973045750787693}
   - component: {fileID: 3385914788302622763}
+  - component: {fileID: 1282849928796577296}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Collect Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,8 +112,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50, y: -50}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -87, y: -50}
+  m_SizeDelta: {x: 138.3303, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &927973045750787693
 CanvasRenderer:
@@ -135,14 +136,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6226415, g: 0.1262905, b: 0.1262905, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -723580379, guid: 50e130118d2adab488a0c8b8db52a3d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -152,6 +153,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1282849928796577296
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518567248623330340}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ec93714a9419fc54687e0dd554581192, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1057380766233389728
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +330,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -188.909, y: -49.99997}
+  m_AnchoredPosition: {x: -269, y: -49.99997}
   m_SizeDelta: {x: 177.818, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6686547661789972096
@@ -1508,7 +1530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e0ffb4ae2ac624e98a06e39c30eeb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectableTransform: {fileID: 0}
+  collectableTransform: {fileID: 447033214638649491}
   collectableText: {fileID: 3254562462769863183}
   <maxCollectableCount>k__BackingField: 5
 --- !u!1 &5054471529825054314
