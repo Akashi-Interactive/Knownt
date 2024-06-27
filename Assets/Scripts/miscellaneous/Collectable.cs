@@ -4,9 +4,9 @@ namespace Knownt
 {
     public class Collectable : MonoBehaviour
     {
-        [SerializeField] private RectTransform icon;
         [SerializeField] private float speed;
-
+  
+        private RectTransform icon;
         private bool isMovingToUI;
         private Camera mainCamera;
 
@@ -23,6 +23,7 @@ namespace Knownt
         private void Start()
         {
             mainCamera = Camera.main;
+            icon = CollectableUI.instance.collectableTransform;
         }
 
         private void FixedUpdate()

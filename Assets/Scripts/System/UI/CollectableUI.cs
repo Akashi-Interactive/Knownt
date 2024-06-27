@@ -7,6 +7,7 @@ namespace Knownt
     {
         public static CollectableUI instance;
 
+        public RectTransform collectableTransform;
         public TextMeshProUGUI collectableText;
         [field: SerializeField] public int maxCollectableCount { get; private set; }
 

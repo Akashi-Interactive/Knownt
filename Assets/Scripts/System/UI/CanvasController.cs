@@ -22,7 +22,7 @@ namespace Knownt
 
         private void Start()
         {
-            ShowGameUI();
+            DisableAll();
         }
 
         public void ShowGameUI()
