@@ -5,7 +5,7 @@ namespace Knownt
 {
     public class MusicSlider : MonoBehaviour
     {
-        private void OnEnable()
+        private void Start()
         {
             AudioManager.Instance.musicSlider = GetComponent<Slider>();
         }

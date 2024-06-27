@@ -31,11 +31,14 @@ namespace Knownt
 
         #region Initialize Methods
         /// <summary> Initialize required componets. </summary>
-        private void Initialize()
+        public void Initialize()
         {
             UpdateMusicVolume(SaveManager.SavedData.AudioData.Music_Volume);
             UpdateEffectVolume(SaveManager.SavedData.AudioData.Effect_Volume);
+        }
 
+        public void LoadSliders()
+        {
             masterSlider.value = SaveManager.SavedData.AudioData.Master_Volume;
             musicSlider.value = SaveManager.SavedData.AudioData.Music_Volume;
             effectSlider.value = SaveManager.SavedData.AudioData.Effect_Volume;

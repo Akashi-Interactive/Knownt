@@ -113,6 +113,7 @@ namespace Knownt
         {
             Debug.Log("<color=#1FA0E6>Pause.</color>");
             PauseController.Pause();
+            AudioManager.Instance.LoadSliders();
             CanvasController.Instance.ShowPauseUI();
         }
 
