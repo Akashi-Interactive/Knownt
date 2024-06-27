@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Knownt
 {
@@ -6,8 +7,14 @@ namespace Knownt
     {
         public static AudioManager Instance { get; private set; }
 
+        public Slider musicSlider;
+        public Slider effectSlider;
+        public Slider masterSlider;
+
         public AudioSource musicSource;
         public AudioSource effectsSource;
+
+        private float masterVolume = 1f;
 
         private void Awake()
         {
@@ -28,6 +35,10 @@ namespace Knownt
         {
             UpdateMusicVolume(SaveManager.SavedData.AudioData.Music_Volume);
             UpdateEffectVolume(SaveManager.SavedData.AudioData.Effect_Volume);
+
+            masterSlider.value = SaveManager.SavedData.AudioData.Master_Volume;
+            musicSlider.value = SaveManager.SavedData.AudioData.Music_Volume;
+            effectSlider.value = SaveManager.SavedData.AudioData.Effect_Volume;
         }
         #endregion
 
@@ -70,11 +81,20 @@ namespace Knownt
         #endregion
  
         #region Update Volume Methods
+        public void UpdateMasterVolume(float value)
+        {
+            masterVolume = value;
+            SaveManager.SavedData.AudioData.Master_Volume = value;
+            SaveManager.SaveConfigFile();
+            UpdateMusicVolume(SaveManager.SavedData.AudioData.Music_Volume);
+            UpdateEffectVolume(SaveManager.SavedData.AudioData.Effect_Volume);
+        }
+
         /// <summary> Method to update the music volume. </summary>
         /// <param name="value">New volume value [0-1].</param>
         public void UpdateMusicVolume(float value)
         {
-            musicSource.volume = value;
+            musicSource.volume = value * masterVolume;
             SaveManager.SavedData.AudioData.Music_Volume = value;
             SaveManager.SaveConfigFile();
         }
@@ -83,7 +103,7 @@ namespace Knownt
         /// <param name="value">New volume value [0-1].</param>
         public void UpdateEffectVolume(float value)
         {
-            effectsSource.volume = value;
+            effectsSource.volume = value * masterVolume;
             SaveManager.SavedData.AudioData.Effect_Volume = value;
             SaveManager.SaveConfigFile();
         }

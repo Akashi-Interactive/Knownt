@@ -17,6 +17,7 @@ namespace Knownt
     {
         public AudioData() { }
 
+        public float Master_Volume = 1f;
         public float Music_Volume = 0.8f;
         public float Effect_Volume = 0.9f;
     }
