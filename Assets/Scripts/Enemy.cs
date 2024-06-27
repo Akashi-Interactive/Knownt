@@ -11,10 +11,15 @@ namespace Knownt
 {
     public class Enemy : MonoBehaviour
     {
+        private static bool pointsSetuped;
+
         [SerializeField]
+        private GameObject pathGameObject;
         private List<Pathpoint> path;
         [SerializeField]
         private LayerMask layerMask;
+        [SerializeField]
+        private int startingPoint;
 
         private Pathpoint nextPathpoint;
         private bool alerted = false;
@@ -34,8 +39,9 @@ namespace Knownt
         // Start is called before the first frame update
         void Start()
         {
+            path = pathGameObject.GetComponentsInChildren<Pathpoint>().ToList();
             FillPathpointsData();
-            nextPathpoint = path[0];
+            nextPathpoint = path[startingPoint];
             player = GameObject.FindGameObjectWithTag("Player");
         }
 
@@ -69,23 +75,27 @@ namespace Knownt
 
         private void FillPathpointsData()
         {
-            foreach (Pathpoint point in path)
+            if (!pointsSetuped)
             {
-                foreach (Pathpoint otherPoint in path)
+                foreach (Pathpoint point in path)
                 {
-                    if (otherPoint != point)
+                    foreach (Pathpoint otherPoint in path)
                     {
-                        RaycastHit2D hit;
-                        Physics2D.queriesStartInColliders = false;
-                        hit = Physics2D.Raycast(point.transform.position, otherPoint.transform.position - point.transform.position, Mathf.Infinity, layerMask);
-                        if (hit.collider != null && hit.transform.gameObject == otherPoint.gameObject)
+                        if (otherPoint != point)
                         {
-                            Pathpoint adjacentPoint = hit.transform.gameObject.GetComponent<Pathpoint>();
-                            point.adjacentPoints.Add(adjacentPoint);
-                            point.distanceFromPathpoint.Add(adjacentPoint, Vector3.Distance(adjacentPoint.transform.position, point.transform.position));
+                            RaycastHit2D hit;
+                            Physics2D.queriesStartInColliders = false;
+                            hit = Physics2D.Raycast(point.transform.position, otherPoint.transform.position - point.transform.position, Mathf.Infinity, layerMask);
+                            if (hit.collider != null && hit.transform.gameObject == otherPoint.gameObject)
+                            {
+                                Pathpoint adjacentPoint = hit.transform.gameObject.GetComponent<Pathpoint>();
+                                point.adjacentPoints.Add(adjacentPoint);
+                                point.distanceFromPathpoint.Add(adjacentPoint, Vector3.Distance(adjacentPoint.transform.position, point.transform.position));
+                            }
                         }
                     }
                 }
+                pointsSetuped = true;
             }
         }
 
@@ -242,9 +252,8 @@ namespace Knownt
             {
                 RaycastHit2D hit;
                 hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, fieldOfVisionLength);
-                Debug.DrawRay(transform.position, (player.transform.position - transform.position).normalized * hit.distance,UnityEngine.Color.red, 100);
 
-                if (hit.transform.gameObject == player)
+                if (hit.transform != null && hit.transform.gameObject == player)
                 {
                     playerInSight = true;
                 }
