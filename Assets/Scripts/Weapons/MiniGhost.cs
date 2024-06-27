@@ -16,7 +16,7 @@ namespace Knownt
             {
                 if (collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    collider.gameObject.GetComponent<Enemy>().OnAlerted(this.gameObject);
+                    collider.gameObject.GetComponent<Enemy>().OnAlerted(gameObject);
                     Debug.Log("<color=red>Enemy Alerted from " + gameObject.name + "</color>");
                 }
             }
