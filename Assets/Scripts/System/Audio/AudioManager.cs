@@ -75,6 +75,8 @@ namespace Knownt
         public void UpdateMusicVolume(float value)
         {
             musicSource.volume = value;
+            SaveManager.SavedData.AudioData.Music_Volume = value;
+            SaveManager.SaveConfigFile();
         }
 
         /// <summary> Method to update the sound effect volume. </summary>
@@ -82,6 +84,8 @@ namespace Knownt
         public void UpdateEffectVolume(float value)
         {
             effectsSource.volume = value;
+            SaveManager.SavedData.AudioData.Effect_Volume = value;
+            SaveManager.SaveConfigFile();
         }
         #endregion
     }
