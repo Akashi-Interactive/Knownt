@@ -25,18 +25,24 @@ namespace Knownt
             mainCamera = Camera.main;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (isMovingToUI)
             {
-                var worldPos = mainCamera.WorldToScreenPoint(icon.transform.position);
+                /*
+                Vector3 worldPos = mainCamera.ScreenToWorldPoint(icon.transform.position);
                 Vector3 perpendicular = transform.position - worldPos;
                 transform.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
-                transform.rotation *= Quaternion.Euler(0, 0, 90);
+                transform.rotation *= Quaternion.Euler(0, 0, -90);
 
-                transform.position = Vector2.MoveTowards(transform.position, worldPos, speed * Time.deltaTime);
+                float scaledMoveSpeed = speed * Time.deltaTime;
+                Vector3 move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * (Vector3)gameObject.transform.right.normalized;
+                transform.position += move * scaledMoveSpeed;*/
 
-                if (Vector2.Distance(worldPos, transform.position) < 0.1)
+                Vector3 worldPos = mainCamera.ScreenToWorldPoint(icon.transform.position);
+                transform.position = Vector3.MoveTowards(transform.position, worldPos, speed * Time.deltaTime);
+
+                if (Vector3.Distance(worldPos, transform.position) < 0.5f)
                 {
                     isMovingToUI = false;
                     CollectableUI.instance.UpdateCollectableText();
