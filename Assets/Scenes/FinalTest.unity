@@ -420,6 +420,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'WinCanvas '
       objectReference: {fileID: 0}
+    - target: {fileID: 8907139661447591188, guid: 390b8a942597df7418edef9e82560358, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

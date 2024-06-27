@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fffe680a67b8a8a44ac2557e577dd940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.5
+  moveSpeed: 5
   lifeTime: 5
   miniGhost: {fileID: 5513144422000102901, guid: 5977b680230c9a5408c7872eedc0da5c, type: 3}
 --- !u!70 &2815223280815654411

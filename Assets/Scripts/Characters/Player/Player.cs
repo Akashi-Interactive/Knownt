@@ -8,6 +8,7 @@ namespace Knownt
         [Header("Player config")]
         [SerializeField] private float moveSpeed = 2f;
         [SerializeField] private float timerBetweenShoots = 10f;
+        [SerializeField] private AudioClip shoot;
         [Space]
         [Header("Objects")]
         [SerializeField] private GameObject projectile;
@@ -107,6 +108,7 @@ namespace Knownt
             newProjectile.GetComponent<Projectile>().Initialize(mouseWorldPos);
             isReloading = true;
             shootCooldown = 0;
+            AudioManager.Instance.PlayOneShot(shoot);
         }
 
         private void Pause(InputAction.CallbackContext context)

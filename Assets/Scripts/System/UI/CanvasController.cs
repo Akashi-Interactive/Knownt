@@ -12,6 +12,9 @@ namespace Knownt
         [SerializeField] private GameObject PauseUI;
         [SerializeField] private GameObject WinUI;
 
+        public AudioClip win;
+        public AudioClip lose;
+
         private void Awake()
         {
             if (Instance == null)
@@ -36,6 +39,7 @@ namespace Knownt
         {
             DisableAll();
             GameOverUI.SetActive(true);
+            AudioManager.Instance.PlayMusic(lose);
         }
 
         public void ShowPauseUI()
@@ -48,6 +52,7 @@ namespace Knownt
         {
             DisableAll();
             WinUI.SetActive(true);
+            AudioManager.Instance.PlayMusic(win);
         }
 
         public void DisableAll()

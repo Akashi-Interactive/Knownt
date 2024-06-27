@@ -57,6 +57,7 @@ namespace Knownt
         /// <param name="music">The audio clip to play</param>
         public void PlayMusic(AudioClip music)
         {
+            musicSource.Stop();
             musicSource.clip = music;
             musicSource.loop = true;
             musicSource.Play();
