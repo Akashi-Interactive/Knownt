@@ -1718,11 +1718,11 @@ PrefabInstance:
       objectReference: {fileID: 474645194}
     - target: {fileID: 1422649354186439423, guid: e2cb2bf939a73034c8fc6b8128bea714, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.07919727
+      value: 0.73
       objectReference: {fileID: 0}
     - target: {fileID: 1422649354186439423, guid: e2cb2bf939a73034c8fc6b8128bea714, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.20883396
+      value: 1.42
       objectReference: {fileID: 0}
     - target: {fileID: 1422649354186439423, guid: e2cb2bf939a73034c8fc6b8128bea714, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1976,7 +1976,9 @@ MonoBehaviour:
   - {fileID: 1811337328}
   - {fileID: 1861194741}
   - {fileID: 21904827}
-  playerLayer: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 119
   speed: 3
   fieldOfVisionWidth: 10
   fieldOfVisionLength: 10
