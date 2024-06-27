@@ -1978,7 +1978,7 @@ MonoBehaviour:
   - {fileID: 21904827}
   layerMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 375
   speed: 3
   fieldOfVisionWidth: 10
   fieldOfVisionLength: 10
